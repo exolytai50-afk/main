@@ -1,1 +1,893 @@
+/* ============================================================
+   ТЕМЫ ПРИЛОЖЕНИЯ (v5 — с !important)
+   ============================================================ */
 
+/* --- Светлая тема --- */
+:root {
+    --bg-body: #e5e7eb;
+    --bg-app: #f9fafb;
+    --bg-card: #ffffff;
+    --bg-hover: #f3f4f6;
+    --text-main: #374151;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --border-main: #e5e7eb;
+    --accent-amber-bg: #fef3c7;
+    --accent-amber-text: #b45309;
+}
+
+/* --- Тёмная тема --- */
+html.theme-dark {
+    --bg-body: #020617;
+    --bg-app: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hover: #334155;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-light: #64748b;
+    --border-main: #334155;
+    --accent-amber-bg: rgba(245, 158, 11, 0.2);
+    --accent-amber-text: #fbbf24;
+}
+
+/* ============================================================
+   ПРИМЕНЕНИЕ (с !important)
+   ============================================================ */
+html, body {
+    background-color: var(--bg-app) !important;
+    color: var(--text-main) !important;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Карточки */
+.bg-white {
+    background-color: var(--bg-card) !important;
+}
+.bg-gray-50, .bg-gray-100 {
+    background-color: var(--bg-hover) !important;
+}
+
+/* Текст */
+.text-gray-800, .text-gray-700, .text-gray-600 {
+    color: var(--text-main) !important;
+}
+.text-gray-500, .text-gray-400 {
+    color: var(--text-muted) !important;
+}
+.text-gray-300 {
+    color: var(--text-light) !important;
+}
+
+/* Границы */
+.border-gray-200, .border-gray-100, .border-gray-50 {
+    border-color: var(--border-main) !important;
+}
+
+/* ============================================================
+   ЧАТЫ
+   ============================================================ */
+.chat-page-wrapper {
+    background-color: var(--bg-app) !important;
+}
+/* Усиливаем специфичность для чата */
+html body .chat-header-fixed,
+html body .chat-messages-scroll,
+html body .chat-input-fixed,
+html body .chat-page-wrapper {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* Убираем белый фон Tailwind внутри чата */
+html body .chat-header-fixed.bg-white,
+html body .chat-messages-scroll.bg-white,
+html body .chat-input-fixed.bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+html.theme-dark .bg-amber-100 {
+    background-color: var(--accent-amber-bg) !important;
+    color: var(--accent-amber-text) !important;
+}
+html.theme-dark .bg-gray-100 {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-main) !important;
+}
+html.theme-dark .bg-amber-50 {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-main) !important;
+}
+
+.chat-input-fixed [contenteditable] {
+    background-color: var(--bg-app) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-main) !important;
+}
+
+html.theme-dark .bg-gray-200\/60 {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-main) !important;
+}
+
+html.theme-dark .bg-white.rounded-2xl.shadow-xl {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+}
+
+/* ДЕСКТОП */
+@media (min-width: 1024px) {
+    html {
+        background: var(--bg-body) !important;
+    }
+    html body {
+        max-width: 1400px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background: var(--bg-app) !important;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+        min-height: 100vh;
+    }
+    html body > aside.fixed { left: max(0px, calc(50vw - 700px)) !important; }
+    html body > main { padding-left: 16rem !important; }
+    html body > footer { padding-left: 16rem !important; }
+    html body > nav.lg\:hidden, html body > .fixed { max-width: none !important; }
+}
+/* ============================================================
+   ГРАДИЕНТЫ В ТЁМНОЙ ТЕМЕ (исправление шапок)
+   ============================================================ */
+html.theme-dark .bg-gradient-to-r,
+html.theme-dark .bg-gradient-to-br,
+html.theme-dark .bg-gradient-to-b,
+html.theme-dark .bg-gradient-to-l {
+    background-image: none !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-main) !important;
+}
+
+/* Убираем светлый текст на градиентах, если он есть */
+html.theme-dark .bg-gradient-to-r .text-gray-800,
+html.theme-dark .bg-gradient-to-r .text-gray-600,
+html.theme-dark .bg-gradient-to-br .text-gray-800 {
+    color: var(--text-main) !important;
+}
+/* ============================================================
+   АКТИВНЫЕ ПУНКТЫ МЕНЮ И КНОПКИ (исправление для тёмной темы)
+   ============================================================ */
+
+/* Фон для активных пунктов меню (когда selected) */
+html.theme-dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.15) !important; /* Мягкий полупрозрачный жёлтый */
+    color: var(--accent-amber-text) !important; /* Светло-жёлтый текст */
+}
+
+/* Для ссылок внутри активного пункта меню (текст должен быть светлым) */
+html.theme-dark .bg-amber-50 .text-gray-700,
+html.theme-dark .bg-amber-50 .text-gray-600,
+html.theme-dark .bg-amber-50 span,
+html.theme-dark .bg-amber-50 a {
+    color: var(--accent-amber-text) !important;
+}
+
+/* Для кнопок с bg-amber-50 (например, кнопка смайла в чате) */
+html.theme-dark .bg-amber-50 svg,
+html.theme-dark .bg-amber-50 .gc-icon {
+    color: var(--accent-amber-text) !important;
+    fill: currentColor !important;
+}
+
+/* Ховер на активные пункты (чтобы было видно при наведении) */
+html.theme-dark .bg-amber-50:hover {
+    background-color: rgba(245, 158, 11, 0.25) !important;
+}
+/* ============================================================
+   ЦВЕТНЫЕ ПЛОШКИ В МЕНЮ И ЧАТАХ (для тёмной темы)
+   ============================================================ */
+
+/* Синий фон (Истории) */
+html.theme-dark .bg-blue-50 {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: #93c5fd !important; /* светло-синий */
+}
+html.theme-dark .bg-blue-50 .text-gray-700,
+html.theme-dark .bg-blue-50 svg,
+html.theme-dark .bg-blue-50 .gc-icon {
+    color: #93c5fd !important;
+    fill: currentColor !important;
+}
+
+/* Зелёный фон (AI-инструменты, Сообщества, Прочее) */
+html.theme-dark .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important; /* светло-зелёный */
+}
+html.theme-dark .bg-emerald-50 .text-gray-700,
+html.theme-dark .bg-emerald-50 svg,
+html.theme-dark .bg-emerald-50 .gc-icon {
+    color: #6ee7b7 !important;
+    fill: currentColor !important;
+}
+
+/* Жёлтый фон (главная, амбер-кнопки) */
+html.theme-dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+}
+html.theme-dark .bg-amber-50 .text-gray-700,
+html.theme-dark .bg-amber-50 svg,
+html.theme-dark .bg-amber-50 .gc-icon {
+    color: #fbbf24 !important;
+    fill: currentColor !important;
+}
+
+/* Фиолетовый фон (Книги, фьюжн) */
+html.theme-dark .bg-violet-50 {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    color: #c4b5fd !important;
+}
+html.theme-dark .bg-violet-50 .text-gray-700,
+html.theme-dark .bg-violet-50 svg,
+html.theme-dark .bg-violet-50 .gc-icon {
+    color: #c4b5fd !important;
+    fill: currentColor !important;
+}
+
+/* Розовый фон (Сохранённые) */
+html.theme-dark .bg-rose-50 {
+    background-color: rgba(244, 63, 94, 0.15) !important;
+    color: #fda4af !important;
+}
+html.theme-dark .bg-rose-50 .text-gray-700,
+html.theme-dark .bg-rose-50 svg,
+html.theme-dark .bg-rose-50 .gc-icon {
+    color: #fda4af !important;
+    fill: currentColor !important;
+}
+/* ============================================================
+   HOVER-ЭФФЕКТЫ В ТЁМНОЙ ТЕМЕ
+   ============================================================ */
+
+/* Серые фоны при наведении */
+html.theme-dark .hover\:bg-gray-50:hover,
+html.theme-dark .hover\:bg-gray-100:hover {
+    background-color: var(--bg-hover) !important; /* #334155 в темной теме */
+}
+
+/* Жёлтые фоны при наведении (меню) */
+html.theme-dark .hover\:bg-amber-50:hover {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+}
+html.theme-dark .hover\:bg-amber-50:hover svg,
+html.theme-dark .hover\:bg-amber-50:hover .gc-icon {
+    color: #fbbf24 !important;
+}
+
+/* Синие фоны при наведении (Истории) */
+html.theme-dark .hover\:bg-blue-50:hover {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: #93c5fd !important;
+}
+
+/* Зелёные фоны при наведении (AI-инструменты) */
+html.theme-dark .hover\:bg-emerald-50:hover {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+}
+
+/* Фиолетовые фоны при наведении (Книги) */
+html.theme-dark .hover\:bg-violet-50:hover {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    color: #c4b5fd !important;
+}
+
+/* Розовые фоны при наведении (Сохранённые) */
+html.theme-dark .hover\:bg-rose-50:hover {
+    background-color: rgba(244, 63, 94, 0.15) !important;
+    color: #fda4af !important;
+}
+/* ============================================================
+   МОБИЛЬНАЯ ШАПКА И НИЖНЕЕ МЕНЮ (фикс тёмной темы)
+   ============================================================ */
+
+/* Мобильная шапка */
+.mobile-header {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+}
+
+/* Мобильное нижнее меню */
+.mobile-nav {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+}
+
+/* Иконки в шапке и меню */
+.mobile-header svg,
+.mobile-header .gc-icon,
+.mobile-nav svg,
+.mobile-nav .gc-icon {
+    color: var(--text-muted) !important;
+    fill: currentColor !important;
+}
+
+.mobile-header .text-gray-600,
+.mobile-header .text-gray-700,
+.mobile-nav .text-gray-400,
+.mobile-nav .text-gray-600 {
+    color: var(--text-muted) !important;
+}
+
+/* Активный пункт в мобильном меню */
+.mobile-nav .text-amber-600 {
+    color: var(--accent-amber-text) !important;
+}
+
+/* Активная иконка (подсветка) */
+.mobile-nav .text-amber-600 svg,
+.mobile-nav .text-amber-600 .gc-icon {
+    color: var(--accent-amber-text) !important;
+    fill: currentColor !important;
+}
+
+/* Заголовок логотипа в шапке */
+.mobile-header .text-amber-700 {
+    color: var(--accent-amber-text) !important;
+}
+
+/* Бейджи (не трогаем цвета, они и так видны) */
+.mobile-nav .bg-rose-500 {
+    background-color: #e11d48 !important; /* Оставляем ярко-красный для контраста */
+}
+
+/* Hover-эффекты в мобильном меню */
+html.theme-dark .mobile-nav .hover\:bg-gray-100:hover,
+html.theme-dark .mobile-header .hover\:bg-gray-100:hover {
+    background-color: var(--bg-hover) !important;
+}
+/* ============================================================
+   КНОПКИ С ГРАДИЕНТАМИ В ТЁМНОЙ ТЕМЕ
+   ============================================================ */
+
+/* Фиолетовые кнопки (AI-генератор, фьюжн, книги) */
+html.theme-dark .from-violet-300,
+html.theme-dark .from-purple-300,
+html.theme-dark .from-fuchsia-300 {
+    color: #e9d5ff !important; /* Светло-фиолетовый текст */
+}
+
+/* Конкретно кнопка "Сгенерировать 4 рецепта" */
+html.theme-dark .from-violet-300.to-purple-300 {
+    color: #f3e8ff !important; /* Почти белый с фиолетовым оттенком */
+}
+
+/* Жёлтые кнопки (сохранить, продолжить) */
+html.theme-dark .from-amber-300,
+html.theme-dark .from-orange-300 {
+    color: #fef3c7 !important; /* Светло-жёлтый текст */
+}
+
+/* Зелёные кнопки (успех) */
+html.theme-dark .from-emerald-300,
+html.theme-dark .from-teal-300 {
+    color: #d1fae5 !important;
+}
+
+/* Синие кнопки */
+html.theme-dark .from-blue-300,
+html.theme-dark .from-cyan-300 {
+    color: #dbeafe !important;
+}
+
+/* Иконки внутри этих кнопок тоже должны быть светлыми */
+html.theme-dark .from-violet-300 svg,
+html.theme-dark .from-violet-300 .gc-icon,
+html.theme-dark .from-purple-300 svg,
+html.theme-dark .from-purple-300 .gc-icon,
+html.theme-dark .from-amber-300 svg,
+html.theme-dark .from-amber-300 .gc-icon {
+    color: currentColor !important;
+    fill: currentColor !important;
+}
+/* ============================================================
+   ФЬЮЖН-СТРАНИЦА (Исправления для тёмной темы)
+   ============================================================ */
+
+/* Блоки кухонь (Кухня А и Кухня Б) */
+html.theme-dark #cuisineASlot,
+html.theme-dark #cuisineBSlot {
+    background: var(--bg-hover) !important;
+    border-color: var(--border-main) !important;
+}
+
+/* Текст "Кухня А" / "Кухня B" */
+html.theme-dark #cuisineASlot .text-amber-700,
+html.theme-dark #cuisineBSlot .text-rose-700 {
+    color: var(--accent-amber-text) !important;
+}
+
+/* Кнопка "Открыть выбор кухонь" */
+html.theme-dark #openCuisinePicker {
+    color: var(--accent-amber-text) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+html.theme-dark #openCuisinePicker:hover {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+/* Кнопка "Случайно" */
+html.theme-dark #randomCuisines {
+    color: var(--accent-amber-text) !important;
+    background-color: rgba(245, 158, 11, 0.1) !important;
+}
+html.theme-dark #randomCuisines:hover {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Когда кухня ВЫБРАНА (слот получает класс .selected) */
+html.theme-dark .cuisine-selector.selected {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(249, 115, 22, 0.2)) !important;
+    color: var(--accent-amber-text) !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Текст внутри выбранного слота (название кухни) */
+html.theme-dark .cuisine-selector.selected .text-sm,
+html.theme-dark .cuisine-selector.selected .text-xs {
+    color: var(--accent-amber-text) !important;
+}
+
+/* Кнопка "Убрать" внутри выбранного слота */
+html.theme-dark .cuisine-selector.selected button {
+    color: rgba(251, 191, 36, 0.8) !important;
+}
+html.theme-dark .cuisine-selector.selected button:hover {
+    color: #fbbf24 !important;
+}
+/* Переключатель режимов на странице фьюжн */
+html.theme-dark .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+}
+html.theme-dark .bg-emerald-100 {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+}
+html.theme-dark .bg-gray-50 {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-muted) !important;
+}
+html.theme-dark .bg-gray-50:hover {
+    background-color: #3f4a5e !important; /* Чуть светлее hover */
+}
+html.theme-dark .ring-amber-300 {
+    --tw-ring-color: rgba(245, 158, 11, 0.4) !important;
+}
+html.theme-dark .ring-emerald-300 {
+    --tw-ring-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Тёмная тема: иконка белая */
+html.theme-dark .cuisine-slot-icon svg {
+    color: #f1f5f9 !important;
+    fill: currentColor !important;
+}
+
+/* В выбранном состоянии (фон желтый) иконка контрастная */
+.cuisine-selector.selected .cuisine-slot-icon svg {
+    color: #b45309;
+}
+
+html.theme-dark .cuisine-selector.selected .cuisine-slot-icon svg {
+    color: #ffffff !important;
+}
+
+/* Текст "Кухня А/Б" */
+.cuisine-slot-label {
+    color: var(--accent-amber-text);
+}
+
+html.theme-dark .cuisine-slot-label {
+    color: #fbbf24 !important;
+}
+/* Поля ввода и селекты в тёмной теме */
+html.theme-dark textarea,
+html.theme-dark select,
+html.theme-dark input {
+    background-color: var(--bg-card) !important; /* #1e293b */
+    color: var(--text-main) !important; /* #f1f5f9 */
+    border-color: var(--border-main) !important; /* #334155 */
+}
+
+/* Плейсхолдер в тёмной теме */
+html.theme-dark textarea::placeholder {
+    color: var(--text-muted) !important; /* #94a3b8 */
+}
+
+/* Фокус на поле ввода */
+html.theme-dark textarea:focus,
+html.theme-dark select:focus,
+html.theme-dark input:focus {
+    border-color: #34d399 !important; /* Светло-зелёный акцент */
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2) !important;
+}
+
+/* ============================================================
+   ПЕРЕКЛЮЧАТЕЛЬ НА СТРАНИЦЕ БИРПЕЙРИНГА (фикс)
+   ============================================================ */
+
+/* Базовое состояние (неактивное) */
+.beer-tab {
+    color: var(--text-muted) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Активное состояние (работает в обеих темах) */
+.beer-tab-active {
+    background-color: #ffffff !important; /* Светлая тема */
+    color: #b45309 !important;            /* Тёмно-желтый (amber-700) */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Активное состояние в тёмной теме */
+html.theme-dark .beer-tab-active {
+    background-color: #475569 !important; /* slate-600 (светлее фона) */
+    color: var(--accent-amber-text) !important; /* Светло-желтый */
+    border: 1px solid #64748b !important; /* slate-500 (видимая обводка) */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Ховер для неактивной кнопки в тёмной теме */
+html.theme-dark .beer-tab:not(.beer-tab-active):hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+/* ============================================================
+   ГЛАВНАЯ КНОПКА НА СТРАНИЦЕ БИРПЕЙРИНГА (фикс обеих тем)
+   ============================================================ */
+
+/* Светлая тема (по умолчанию) */
+.beer-btn-main {
+    background-image: linear-gradient(to right, #fbbf24, #fb923c) !important; /* Градиент amber-400 -> orange-400 */
+    color: #78350f !important; /* amber-900 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.beer-btn-main:hover:not(:disabled) {
+    background-image: linear-gradient(to right, #f59e0b, #f97316) !important; /* Чуть темнее при ховере */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Тёмная тема */
+html.theme-dark .beer-btn-main {
+    background-image: linear-gradient(to right, #f59e0b, #ea580c) !important; /* Яркий градиент для тёмного фона */
+    color: #ffffff !important; /* Белый текст для контраста */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.theme-dark .beer-btn-main:hover:not(:disabled) {
+    background-image: linear-gradient(to right, #fbbf24, #f97316) !important; /* Светлее при ховере */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* ============================================================
+   ПЕРЕКЛЮЧАТЕЛЬ ТИПОВ ДИАБЕТА (фикс)
+   ============================================================ */
+
+/* Неактивная кнопка (Светлая и Тёмная тема) */
+.diabetes-tab {
+    background-color: rgba(16, 185, 129, 0.1) !important; /* Полупрозрачный зеленый */
+    color: #059669 !important; /* emerald-600 */
+    border: 1px solid transparent !important;
+}
+
+.diabetes-tab:hover {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Активная кнопка (Светлая тема) */
+.diabetes-tab-active {
+    background-color: #10b981 !important; /* emerald-500 */
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3) !important;
+    border: 1px solid #10b981 !important;
+}
+
+/* Активная кнопка (Тёмная тема) */
+html.theme-dark .diabetes-tab {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important; /* emerald-400 */
+}
+
+html.theme-dark .diabetes-tab:hover {
+    background-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+html.theme-dark .diabetes-tab-active {
+    background-color: #10b981 !important; /* Оставляем ярко-зеленым */
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid #059669 !important;
+}
+/* ============================================================
+   ПЛАНИРОВЩИК ПРАЗДНИКА (фикс залипания кнопок)
+   ============================================================ */
+
+/* --- ПОВОД (Розовый) --- */
+.holiday-btn {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+.holiday-btn:hover {
+    border-color: rgba(244, 63, 94, 0.5) !important;
+}
+.holiday-btn-active {
+    background-color: rgba(244, 63, 94, 0.1) !important;
+    border-color: #f43f5e !important;
+    color: #f43f5e !important;
+}
+html.theme-dark .holiday-btn-active {
+    background-color: rgba(244, 63, 94, 0.2) !important;
+    border-color: #f43f5e !important;
+    color: #fda4af !important;
+}
+
+/* --- БЮДЖЕТ (Желтый) --- */
+.budget-btn {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+.budget-btn:hover {
+    border-color: rgba(245, 158, 11, 0.5) !important;
+}
+.budget-btn-active {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+    border-color: #f59e0b !important;
+    color: #b45309 !important;
+}
+.budget-btn-active div {
+    color: #b45309 !important; /* Текст внутри */
+}
+html.theme-dark .budget-btn-active {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+    border-color: #f59e0b !important;
+    color: #fbbf24 !important;
+}
+html.theme-dark .budget-btn-active div {
+    color: #fbbf24 !important;
+}
+
+/* --- ВОЗРАСТ (Фиолетовый) --- */
+.age-btn {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+.age-btn:hover {
+    border-color: rgba(139, 92, 246, 0.5) !important;
+}
+.age-btn-active {
+    background-color: rgba(139, 92, 246, 0.1) !important;
+    border-color: #8b5cf6 !important;
+    color: #6d28d9 !important;
+}
+html.theme-dark .age-btn-active {
+    background-color: rgba(139, 92, 246, 0.2) !important;
+    border-color: #8b5cf6 !important;
+    color: #c4b5fd !important;
+}
+
+/* --- ДИЕТА (Зеленый) --- */
+.diet-btn {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-muted) !important;
+}
+.diet-btn-active {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+    border-color: #10b981 !important;
+    color: #059669 !important;
+}
+html.theme-dark .diet-btn-active {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    border-color: #10b981 !important;
+    color: #6ee7b7 !important;
+}
+/* ============================================================
+   AI-ГЕНЕРАТОР КУЛИНАРНЫХ КНИГ (фикс кнопок режимов)
+   ============================================================ */
+
+/* --- РЕЖИМ (Фиолетовый) --- */
+.cookbook-mode-btn {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+.cookbook-mode-btn:hover:not(:disabled) {
+    border-color: rgba(139, 92, 246, 0.5) !important; /* violet-500 */
+}
+.cookbook-mode-btn:disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+}
+
+/* Активное состояние (Светлая тема) */
+.cookbook-mode-btn-active {
+    background-color: rgba(139, 92, 246, 0.1) !important; /* violet-50 */
+    border-color: #8b5cf6 !important; /* violet-500 */
+    color: #6d28d9 !important; /* violet-700 */
+}
+
+/* Активное состояние (Тёмная тема) */
+html.theme-dark .cookbook-mode-btn-active {
+    background-color: rgba(139, 92, 246, 0.2) !important; /* Чуть плотнее для тёмного фона */
+    border-color: #8b5cf6 !important;
+    color: #c4b5fd !important; /* violet-300 */
+}
+
+/* ============================================================
+   КОММЕНТАРИИ, ПОСТЫ СООБЩЕСТВ И ПАНЕЛЬ СМАЙЛОВ (assets/css/gc-social.css)
+   Светлая тема — в gc-social.css, здесь только тёмная.
+   ============================================================ */
+html.theme-dark .gc-feed-item,
+html.theme-dark .gc-post,
+html.theme-dark .gc-card,
+html.theme-dark .gc-tabs {
+    background-color: var(--bg-card) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+html.theme-dark .gc-feed-item > .gc-cwrap {
+    background-color: var(--bg-card) !important;
+}
+html.theme-dark .gc-feed-item > :not(:first-child):not(.gc-cwrap) {
+    background-color: var(--bg-card) !important;
+    border-top-color: var(--border-main) !important;
+}
+html.theme-dark .gc-cwrap {
+    border-top-color: var(--border-main);
+    color: var(--text-main);
+}
+
+/* Строка «Комментировать / Написать комментарий…» */
+html.theme-dark .gc-cbar-count { color: var(--text-muted); }
+html.theme-dark .gc-cbar-count:hover,
+html.theme-dark .gc-cwrap.is-open .gc-cbar-count {
+    background-color: var(--accent-amber-bg);
+    color: var(--accent-amber-text);
+}
+html.theme-dark .gc-cbar-fake {
+    background-color: var(--bg-hover);
+    border-color: var(--border-main);
+}
+html.theme-dark .gc-cbar-fake:hover {
+    background-color: var(--bg-app);
+    border-color: rgba(245, 158, 11, 0.5);
+}
+html.theme-dark .gc-cbar-ph,
+html.theme-dark .gc-cempty,
+html.theme-dark .gc-cloading,
+html.theme-dark .gc-hint,
+html.theme-dark .gc-c-meta,
+html.theme-dark .gc-post-time,
+html.theme-dark .gc-about-meta,
+html.theme-dark .gc-loadmore,
+html.theme-dark .gc-pc-hint { color: var(--text-light); }
+
+/* Комментарии */
+html.theme-dark .gc-c-bubble { background-color: var(--bg-hover); }
+html.theme-dark .gc-c-name,
+html.theme-dark .gc-post-name,
+html.theme-dark .gc-card-title,
+html.theme-dark .gc-cd-stats b,
+html.theme-dark .gc-empty b { color: var(--text-main); }
+html.theme-dark .gc-c-text,
+html.theme-dark .gc-post-text,
+html.theme-dark .gc-about-text,
+html.theme-dark .gc-member-mini span.n { color: var(--text-main); }
+html.theme-dark .gc-c-text a,
+html.theme-dark .gc-post-text a,
+html.theme-dark .gc-hint a,
+html.theme-dark .gc-cmore,
+html.theme-dark .gc-readmore { color: var(--accent-amber-text); }
+html.theme-dark .gc-link,
+html.theme-dark .gc-cd-stats,
+html.theme-dark .gc-empty,
+html.theme-dark .gc-pc-join { color: var(--text-muted); }
+html.theme-dark .gc-link:hover,
+html.theme-dark .gc-c-name:hover,
+html.theme-dark .gc-post-name:hover { color: var(--accent-amber-text); }
+html.theme-dark .gc-link-danger:hover { color: #fda4af; }
+html.theme-dark .gc-ava-img { background-color: var(--bg-hover); }
+html.theme-dark .gc-ava-fb { background-color: var(--accent-amber-bg); color: var(--accent-amber-text); }
+html.theme-dark .gc-badge { background-color: var(--accent-amber-bg); color: var(--accent-amber-text); }
+html.theme-dark .gc-btn-ghost { background-color: var(--bg-hover); color: var(--text-main); }
+html.theme-dark .gc-btn-ghost:hover { background-color: #3f4a5e; }
+html.theme-dark .gc-like { color: var(--text-light); }
+html.theme-dark .gc-like:hover:not(:disabled) { background-color: var(--bg-hover); color: #4ade80; }
+html.theme-dark .gc-like.is-on { background-color: rgba(34, 197, 94, 0.18); color: #4ade80; }
+html.theme-dark .gc-c-img img,
+html.theme-dark .gc-post-img { background-color: var(--bg-hover); }
+
+/* Редактор (поле, кнопки смайла/фото/отправки) */
+html.theme-dark .gc-input {
+    background-color: var(--bg-hover) !important;
+    border-color: var(--border-main) !important;
+    color: var(--text-main) !important;
+}
+html.theme-dark .gc-input:focus {
+    background-color: var(--bg-app) !important;
+    border-color: rgba(245, 158, 11, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
+}
+html.theme-dark .gc-input:empty::before { color: var(--text-muted); }
+html.theme-dark .gc-preview img { border-color: var(--border-main); }
+html.theme-dark .gc-preview-x { background-color: var(--bg-hover); color: #fda4af; }
+html.theme-dark .gc-tool {
+    background-color: var(--accent-amber-bg);
+    color: var(--accent-amber-text);
+}
+html.theme-dark .gc-tool:hover,
+html.theme-dark .gc-tool.is-on { background-color: rgba(245, 158, 11, 0.35); }
+html.theme-dark .gc-send { background-color: #f59e0b; color: #1e293b; }
+html.theme-dark .gc-send:hover:not(:disabled) { background-color: #fbbf24; }
+
+/* Панель смайлов */
+html.theme-dark .gc-epanel {
+    background-color: var(--bg-card);
+    border-color: var(--border-main);
+}
+html.theme-dark .gc-ep-tabs,
+html.theme-dark .gc-emoji-tabs { border-bottom-color: var(--border-main); }
+html.theme-dark .gc-emoji-tabs { background-color: var(--bg-card); }
+html.theme-dark .gc-ep-tab { color: var(--text-muted); }
+html.theme-dark .gc-ep-tab.is-active {
+    background-color: var(--accent-amber-bg);
+    color: var(--accent-amber-text);
+    border-bottom-color: #f59e0b;
+}
+html.theme-dark .gc-emoji-tab {
+    background-color: var(--bg-hover);
+    border-color: var(--border-main);
+}
+html.theme-dark .gc-emoji-tab.is-active {
+    background-color: var(--accent-amber-bg);
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 1px #f59e0b inset;
+}
+html.theme-dark .gc-emoji-grid { background-color: var(--bg-app); }
+html.theme-dark .gc-emoji-item:hover { background-color: var(--bg-hover); }
+
+/* Лента сообщества: вкладки, фильтры, меню записи, голосование */
+html.theme-dark .gc-tab { color: var(--text-muted); }
+html.theme-dark .gc-tab:hover { background-color: var(--bg-hover); }
+html.theme-dark .gc-tab.is-active { background-color: var(--accent-amber-bg); color: var(--accent-amber-text); }
+html.theme-dark .gc-card-title a,
+html.theme-dark .gc-card-title button,
+html.theme-dark .gc-pinned { color: var(--accent-amber-text); }
+html.theme-dark .gc-post.is-pinned { box-shadow: 0 0 0 1.5px rgba(245, 158, 11, 0.5), 0 1px 3px rgba(0, 0, 0, 0.5); }
+html.theme-dark .gc-pc-open { background-color: var(--bg-hover); color: var(--text-muted); }
+html.theme-dark .gc-pc-open:hover { background-color: #3f4a5e; }
+html.theme-dark .gc-pc-quick button { color: var(--text-muted); }
+html.theme-dark .gc-pc-quick button:hover { background-color: var(--accent-amber-bg); color: var(--accent-amber-text); }
+html.theme-dark .gc-seg { background-color: var(--bg-hover); }
+html.theme-dark .gc-seg button { color: var(--text-muted); }
+html.theme-dark .gc-seg button.is-active { background-color: #475569; color: var(--accent-amber-text); }
+html.theme-dark .gc-menu-btn { color: var(--text-muted); }
+html.theme-dark .gc-menu-btn:hover { background-color: var(--bg-hover); color: var(--text-main); }
+html.theme-dark .gc-menu-list {
+    background-color: var(--bg-card);
+    border-color: var(--border-main);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+html.theme-dark .gc-menu-list button { color: var(--text-main); }
+html.theme-dark .gc-menu-list button:hover { background-color: var(--bg-hover); }
+html.theme-dark .gc-menu-list button svg { color: var(--text-muted); }
+html.theme-dark .gc-menu-list button.is-danger,
+html.theme-dark .gc-menu-list button.is-danger svg { color: #fda4af; }
+html.theme-dark .gc-act { color: var(--text-muted); }
+html.theme-dark .gc-act:hover:not(:disabled) { background-color: var(--bg-hover); }
+html.theme-dark .gc-act.is-like { background-color: rgba(34, 197, 94, 0.18); color: #4ade80; }
+html.theme-dark .gc-act.is-dislike { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; }

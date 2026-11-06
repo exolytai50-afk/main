@@ -1,0 +1,367 @@
+/* ==========================================================================
+   GigaChef — комментарии (лента / сообщества) и лента сообщества в стиле VK.
+   Не зависит от Tailwind: все классы с префиксом gc-.
+   ========================================================================== */
+
+.gc-cwrap [hidden], .gc-post [hidden], .gc-cd [hidden], .gc-compose [hidden],
+.gc-epanel[hidden], .gc-lightbox[hidden], .gc-menu-list[hidden], .gc-editing [hidden],
+.gc-feed-item [hidden] { display: none !important; }
+
+.gc-noscroll { overflow: hidden; }
+
+/* ───────── эмодзи в тексте ───────── */
+.gc-c-text .inline-emoji, .gc-post-text .inline-emoji, .gc-input .inline-emoji {
+  height: 1.45em; width: auto; vertical-align: middle; display: inline-block; line-height: 1;
+}
+.gc-c-text, .gc-post-text {
+  white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
+}
+.gc-c-text a, .gc-post-text a { color: #d97706; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ───────── аватары ───────── */
+.gc-ava { display: inline-block; border-radius: 50%; flex-shrink: 0; }
+.gc-ava-xs { width: 26px; height: 26px; }
+.gc-ava-sm { width: 34px; height: 34px; }
+.gc-ava-md { width: 44px; height: 44px; }
+.gc-ava-lg { width: 56px; height: 56px; }
+.gc-ava-img { object-fit: cover; background: #f3f4f6; }
+.gc-ava-fb {
+  display: inline-flex; align-items: center; justify-content: center; overflow: hidden;
+  background: #fef3c7; color: #d97706;
+}
+.gc-ava-fb svg { width: 100%; height: 100%; }
+
+/* ───────── ссылки-кнопки и бейджи ───────── */
+.gc-link {
+  background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-size: 12px;
+  font-weight: 600; color: #6b7280; transition: color .15s;
+}
+.gc-link:hover { color: #d97706; }
+.gc-link-danger:hover { color: #e11d48; }
+.gc-badge {
+  display: inline-block; font-size: 10px; font-weight: 700; line-height: 1; padding: 3px 7px;
+  border-radius: 999px; background: #fef3c7; color: #b45309; vertical-align: middle;
+}
+.gc-btn { border: 0; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; border-radius: 999px; padding: 7px 14px; }
+.gc-btn-ghost { background: #f3f4f6; color: #4b5563; }
+.gc-btn-ghost:hover { background: #e5e7eb; }
+
+/* ==========================================================================
+   Комментарии
+   ========================================================================== */
+
+/* обёртка карточки ленты: карточка + панель комментариев выглядят единым блоком */
+.gc-feed-item { display: block; }
+.gc-feed-item > :first-child:not(.gc-cwrap) {
+  border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important;
+  margin-bottom: 0 !important; box-shadow: none !important;
+}
+.gc-feed-item { border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1); display: flex; flex-direction: column; }
+.gc-feed-item > .gc-cwrap { background: #fff; border-radius: 0; order: 1; }
+.gc-feed-item > .gc-cwrap:last-child { border-radius: 0 0 1rem 1rem; }
+/* Всё, что скрипт рекламы вставил внутрь элемента ленты (не карточка и не комментарии),
+   показываем ПОСЛЕ комментариев, а не между постом и комментариями. */
+.gc-feed-item > :not(:first-child):not(.gc-cwrap) {
+  order: 2; margin: 0 !important; box-shadow: none !important; border-radius: 0 0 1rem 1rem !important;
+  border-width: 1px 0 0 !important; border-top-color: #f3f4f6; background-color: #fff;
+}
+
+.gc-cwrap { border-top: 1px solid #f3f4f6; font-size: 14px; color: #374151; }
+
+.gc-cbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; }
+.gc-cbar-count {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  background: none; border: 0; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700;
+  color: #6b7280; padding: 6px 10px; margin-left: -10px; border-radius: 10px; transition: background .15s, color .15s;
+}
+.gc-cbar-count:hover, .gc-cwrap.is-open .gc-cbar-count { background: #fffbeb; color: #b45309; }
+.gc-cbar-count svg { width: 20px; height: 20px; }
+.gc-cbar-fake {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; cursor: text;
+  background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 999px; padding: 3px 14px 3px 4px;
+  font: inherit; text-align: left; transition: background .15s, border-color .15s;
+}
+.gc-cbar-fake:hover { background: #fff; border-color: #fcd34d; }
+.gc-cbar-ph { color: #9ca3af; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gc-cbar-ava { display: inline-flex; }
+
+.gc-cpanel { padding: 0 16px 14px; }
+.gc-clist { display: flex; flex-direction: column; }
+.gc-cempty, .gc-cloading, .gc-hint { text-align: center; color: #9ca3af; font-size: 13px; padding: 10px 0; }
+.gc-hint a { color: #d97706; font-weight: 700; }
+.gc-cmore-wrap { padding: 2px 0 8px; }
+.gc-cmore { font-size: 13px; color: #d97706; }
+
+.gc-c { display: flex; gap: 10px; padding: 6px 0; border-radius: 12px; }
+.gc-c-ava { flex-shrink: 0; align-self: flex-start; }
+.gc-c-main { flex: 1; min-width: 0; }
+.gc-c-bubble {
+  display: inline-block; max-width: 100%; background: #f3f4f6; border-radius: 4px 16px 16px 16px;
+  padding: 8px 12px; box-sizing: border-box;
+}
+.gc-c-head { display: flex; align-items: center; gap: 6px; margin-bottom: 1px; }
+.gc-c-name { font-weight: 700; font-size: 13px; color: #1f2937; text-decoration: none; }
+.gc-c-name:hover { color: #d97706; }
+.gc-c-text { font-size: 14px; line-height: 1.45; color: #374151; }
+.gc-c-img { display: block; margin-top: 6px; }
+.gc-c-img img { display: block; max-width: min(100%, 280px); max-height: 260px; border-radius: 12px; object-fit: cover; cursor: zoom-in; }
+.gc-c-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin: 3px 0 0 4px; font-size: 12px; color: #9ca3af; }
+.gc-c-time { white-space: nowrap; }
+
+.gc-like {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 4px; background: none; border: 0;
+  cursor: pointer; color: #9ca3af; font: inherit; font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 8px;
+}
+.gc-like svg { width: 16px; height: 16px; }
+.gc-like:hover:not(:disabled) { background: #f3f4f6; color: #16a34a; }
+.gc-like.is-on { color: #16a34a; background: #dcfce7; }
+.gc-like:disabled { cursor: default; opacity: .7; }
+.gc-pop { animation: gc-pop .35s ease; }
+@keyframes gc-pop { 0% { transform: scale(1) } 40% { transform: scale(1.22) } 100% { transform: scale(1) } }
+
+/* ───────── редактор (как в чатах) ───────── */
+.gc-compose { display: block; margin-top: 8px; }
+.gc-compose-ava { display: none; }
+.gc-compose-box {
+  display: grid; align-items: center; gap: 8px;
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    "prev  prev prev  prev   prev"
+    "emoji img  input cancel send"
+    "panel panel panel panel panel";
+}
+.gc-compose.is-busy { opacity: .65; pointer-events: none; }
+
+.gc-input {
+  grid-area: input; min-width: 0; min-height: 40px; max-height: 180px; overflow-y: auto; outline: none; box-sizing: border-box;
+  font-size: 14px; line-height: 1.45; padding: 9px 14px; white-space: pre-wrap; overflow-wrap: anywhere; color: #1f2937;
+  background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 14px; transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.gc-input:focus { background: #fff; border-color: #fcd34d; box-shadow: 0 0 0 3px rgba(252,211,77,.25); }
+.gc-input:empty::before { content: attr(data-placeholder); color: #9ca3af; pointer-events: none; }
+
+.gc-preview { grid-area: prev; position: relative; justify-self: start; padding: 0 0 2px; }
+.gc-preview img { display: block; max-width: 160px; max-height: 130px; border-radius: 12px; object-fit: cover; border: 1px solid #e5e7eb; }
+.gc-preview-x {
+  position: absolute; top: -6px; right: -8px; width: 24px; height: 24px; border-radius: 50%; border: 0;
+  background: #fff; color: #e11d48; box-shadow: 0 1px 4px rgba(0,0,0,.3); cursor: pointer; font-size: 16px; line-height: 1; padding: 0;
+}
+.gc-compose-tools { display: contents; }
+.gc-tool {
+  width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  border-radius: 12px; border: 0; background: #fef3c7; color: #d97706; cursor: pointer; transition: background .15s, color .15s;
+}
+.gc-tool[data-gc-emoji-btn] { grid-area: emoji; }
+label.gc-tool { grid-area: img; }
+.gc-tool:hover, .gc-tool.is-on { background: #fde68a; }
+.gc-tool svg { width: 22px; height: 22px; }
+.gc-ic-smile, .gc-ic-kb { display: inline-flex; }
+.gc-ic-kb { display: none; }
+.gc-compose-tools .gc-btn-ghost { grid-area: cancel; }
+.gc-send {
+  grid-area: send; height: 40px; min-width: 56px; padding: 0 14px; border: 0; border-radius: 12px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 700;
+  background: #fbbf24; color: #fff; transition: box-shadow .15s, opacity .15s, background .15s;
+}
+.gc-send svg { width: 20px; height: 20px; }
+.gc-send:hover:not(:disabled) { background: #f59e0b; box-shadow: 0 3px 10px rgba(245,158,11,.35); }
+.gc-send:disabled { opacity: .45; cursor: default; }
+
+.gc-editing { margin: 2px 0 4px; }
+.gc-editing .gc-compose { margin-top: 0; }
+
+/* ───────── панель смайлов (внутри редактора, как в чате) ───────── */
+.gc-epanel {
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  grid-area: panel; min-width: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+}
+.gc-ep-tabs { display: flex; border-bottom: 1px solid #e5e7eb; }
+.gc-ep-tab {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 8px;
+  border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; font: inherit; font-weight: 700; font-size: 15px; cursor: default; color: #6b7280;
+}
+.gc-ep-tab.is-active { background: #fffbeb; color: #d97706; border-bottom-color: #f59e0b; }
+.gc-ep-tab svg { width: 22px; height: 22px; }
+.gc-emoji-tabs { display: flex; gap: 6px; padding: 8px; overflow-x: auto; border-bottom: 1px solid #e5e7eb; background: #fff; scrollbar-width: thin; }
+.gc-emoji-tab { flex-shrink: 0; width: 42px; height: 42px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f3f4f6; padding: 3px; cursor: pointer; }
+.gc-emoji-tab.is-active { background: #fef3c7; border-color: #fbbf24; box-shadow: 0 0 0 1px #fbbf24 inset; }
+.gc-emoji-tab img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.gc-emoji-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 4px; padding: 8px;
+  height: 270px; overflow-y: auto; align-content: start; background: #f3f4f6; overscroll-behavior: contain;
+}
+.gc-emoji-item { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 0; background: none; border-radius: 10px; padding: 2px; cursor: pointer; }
+.gc-emoji-item:hover { background: #fff; }
+.gc-emoji-item img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.gc-emoji-u { font-size: 30px; line-height: 1; }
+
+/* мобильный: поле на всю ширину, ниже кнопки; смайлы ⇄ клавиатура */
+@media (max-width: 640px) {
+  .gc-compose-box {
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "prev  prev  prev   prev   prev"
+      "input input input  input  input"
+      "emoji img   .      cancel send"
+      "panel panel panel  panel  panel";
+  }
+  .gc-compose.is-emoji-open .gc-ic-smile { display: none; }
+  .gc-compose.is-emoji-open .gc-ic-kb { display: inline-flex; }
+  .gc-send { min-width: 64px; }
+  .gc-ep-tab { padding: 10px 6px; font-size: 14px; }
+  .gc-emoji-tab { width: 40px; height: 40px; }
+  .gc-emoji-grid { grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 6px; height: 230px; }
+  .gc-emoji-u { font-size: 24px; }
+}
+
+/* ───────── лайтбокс, тост ───────── */
+.gc-lightbox { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.86); padding: 16px; }
+.gc-lightbox img { max-width: 94vw; max-height: 86vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.gc-lightbox-x { position: absolute; top: 12px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255,255,255,.15); color: #fff; font-size: 26px; cursor: pointer; }
+.gc-lightbox-open { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,.92); color: #374151; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 10px; text-decoration: none; }
+.gc-toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 10001; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  background: #1f2937; color: #fff; font-size: 14px; padding: 11px 18px; border-radius: 12px; max-width: calc(100vw - 32px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: opacity .2s, transform .2s;
+}
+.gc-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+.gc-toast.is-error { background: #be123c; }
+
+.is-target { animation: gc-flash 2.2s ease; }
+@keyframes gc-flash { 0%, 60% { box-shadow: 0 0 0 3px #fbbf24, 0 8px 24px rgba(251,191,36,.35); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* ==========================================================================
+   Сообщество: шапка, вкладки, лента, сайдбар (в духе VK)
+   ========================================================================== */
+
+.gc-cd-wrap { max-width: 64rem; margin: -48px auto 0; padding: 0 16px 40px; position: relative; }
+@media (min-width: 640px) { .gc-cd-wrap { padding-left: 24px; padding-right: 24px; } }
+
+.gc-cd-stats { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; font-size: 14px; color: #6b7280; }
+.gc-cd-stats b { color: #1f2937; font-weight: 800; }
+.gc-cd-stats span { display: inline-flex; align-items: center; gap: 5px; }
+
+.gc-tabs { display: flex; gap: 4px; margin: 16px 0; padding: 5px; background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.gc-tab {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 8px; border: 0; border-radius: 12px;
+  background: none; cursor: pointer; font: inherit; font-size: 14px; font-weight: 700; color: #6b7280; transition: background .15s, color .15s;
+}
+.gc-tab:hover { background: #f9fafb; }
+.gc-tab.is-active { background: #fef3c7; color: #b45309; }
+.gc-tab small { font-weight: 700; font-size: 12px; opacity: .75; }
+
+.gc-cd-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.gc-cd-aside { display: none; }
+@media (min-width: 1024px) {
+  .gc-cd-grid { grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+  .gc-cd-aside { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 88px; }
+}
+.gc-cd-main { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+
+.gc-card { background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); padding: 16px; }
+.gc-card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 12px; font-size: 14px; font-weight: 800; color: #1f2937; }
+.gc-card-title a, .gc-card-title button { font-size: 12px; font-weight: 700; color: #d97706; background: none; border: 0; cursor: pointer; text-decoration: none; }
+.gc-about-text { margin: 0; font-size: 14px; line-height: 1.5; color: #4b5563; overflow-wrap: anywhere; }
+.gc-about-meta { margin-top: 10px; font-size: 12px; color: #9ca3af; }
+
+.gc-members-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 6px; }
+.gc-member-mini { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; text-decoration: none; text-align: center; }
+.gc-member-mini span.n { width: 100%; font-size: 11px; color: #4b5563; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gc-member-mini:hover span.n { color: #d97706; }
+
+/* — композер записи (сворачиваемый) — */
+.gc-pc { padding: 12px 14px; }
+.gc-pc-collapsed { display: flex; align-items: center; gap: 10px; }
+.gc-pc-open {
+  flex: 1; min-width: 0; text-align: left; border: 0; cursor: text; font: inherit; font-size: 14px; color: #9ca3af;
+  background: #f9fafb; border-radius: 999px; padding: 11px 16px; transition: background .15s;
+}
+.gc-pc-open:hover { background: #f3f4f6; }
+.gc-pc-quick { display: flex; gap: 2px; }
+.gc-pc-quick button { width: 38px; height: 38px; border: 0; border-radius: 50%; background: none; color: #9ca3af; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.gc-pc-quick button:hover { background: #fef3c7; color: #d97706; }
+.gc-pc-quick svg { width: 22px; height: 22px; }
+.gc-pc-form { display: none; }
+.gc-pc.is-open .gc-pc-collapsed { display: none; }
+.gc-pc.is-open .gc-pc-form { display: block; }
+.gc-pc-form .gc-input { min-height: 96px; max-height: 320px; font-size: 15px; }
+.gc-pc-form .gc-send { padding: 0 20px; }
+.gc-pc-hint { font-size: 11px; color: #9ca3af; margin: 6px 4px 0; }
+.gc-pc-join { text-align: center; font-size: 14px; color: #6b7280; padding: 6px 0; }
+
+/* пока пользователь не вступил — композеры скрыты, показывается подсказка */
+.gc-cd:not(.is-member) .gc-pc-collapsed,
+.gc-cd:not(.is-member) .gc-pc-form,
+.gc-cd:not(.is-member) .gc-compose { display: none !important; }
+.gc-hint-join, .gc-pc-join { display: none; }
+.gc-cd:not(.is-member) .gc-hint-join, .gc-cd:not(.is-member) .gc-pc-join { display: block; }
+
+/* — переключатель фильтра — */
+.gc-filter { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.gc-seg { display: inline-flex; padding: 3px; border-radius: 12px; background: #f3f4f6; }
+.gc-seg button { border: 0; background: none; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; color: #6b7280; padding: 7px 14px; border-radius: 9px; }
+.gc-seg button.is-active { background: #fff; color: #b45309; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* — пост — */
+.gc-posts { display: flex; flex-direction: column; gap: 14px; }
+.gc-post { position: relative; background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); padding: 16px 16px 0; overflow: visible; }
+.gc-post.is-pinned { box-shadow: 0 0 0 1.5px #fde68a, 0 1px 3px rgba(0,0,0,.1); }
+.gc-pinned { display: flex; align-items: center; gap: 6px; margin: -4px 0 10px; font-size: 12px; font-weight: 700; color: #b45309; }
+.gc-pinned svg { width: 15px; height: 15px; }
+.gc-post-head { display: flex; align-items: center; gap: 10px; }
+.gc-post-ava { flex-shrink: 0; display: inline-flex; }
+.gc-post-who { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; }
+.gc-post-name { font-weight: 800; font-size: 15px; color: #1f2937; text-decoration: none; }
+.gc-post-name:hover { color: #d97706; }
+.gc-post-time { flex-basis: 100%; font-size: 12px; color: #9ca3af; text-decoration: none; }
+.gc-post-time:hover { color: #d97706; text-decoration: underline; }
+
+.gc-menu { position: relative; margin-left: auto; align-self: flex-start; }
+.gc-menu-btn { width: 34px; height: 34px; border: 0; border-radius: 50%; background: none; color: #9ca3af; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.gc-menu-btn:hover { background: #f3f4f6; color: #4b5563; }
+.gc-menu-list {
+  position: absolute; right: 0; top: 100%; z-index: 20; min-width: 170px; padding: 6px; background: #fff;
+  border: 1px solid #e5e7eb; border-radius: 14px; box-shadow: 0 12px 30px rgba(0,0,0,.15);
+}
+.gc-menu-list button { width: 100%; display: flex; align-items: center; gap: 9px; text-align: left; border: 0; background: none; cursor: pointer; font: inherit; font-size: 14px; color: #374151; padding: 9px 10px; border-radius: 9px; }
+.gc-menu-list button:hover { background: #f9fafb; }
+.gc-menu-list button svg { width: 17px; height: 17px; color: #9ca3af; }
+.gc-menu-list button.is-danger { color: #e11d48; }
+.gc-menu-list button.is-danger svg { color: #e11d48; }
+
+.gc-post-body { padding: 12px 0 2px; }
+.gc-post-text { font-size: 15px; line-height: 1.55; color: #1f2937; }
+.gc-post-text.is-clamped { display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.gc-readmore { display: block; margin-top: 4px; font-size: 14px; color: #d97706; }
+.gc-post-img { display: block; margin-top: 10px; border-radius: 14px; overflow: hidden; background: #f3f4f6; }
+.gc-post-img img { display: block; width: 100%; max-height: 560px; object-fit: contain; cursor: zoom-in; }
+.gc-post-sticker { display: block; margin-top: 10px; max-width: 160px; }
+
+.gc-post-actions { display: flex; align-items: center; gap: 4px; padding: 8px 0 10px; }
+.gc-act {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border: 0; border-radius: 12px; background: none;
+  cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; color: #6b7280; transition: background .15s, color .15s;
+}
+.gc-act svg { width: 20px; height: 20px; }
+.gc-act:hover:not(:disabled) { background: #f3f4f6; }
+.gc-act:disabled { cursor: default; opacity: .6; }
+.gc-act.is-like { color: #16a34a; background: #dcfce7; }
+.gc-act.is-dislike { color: #dc2626; background: #fee2e2; }
+.gc-act-right { margin-left: auto; }
+
+.gc-post .gc-cwrap { margin: 0 -16px; border-radius: 0 0 16px 16px; }
+
+.gc-empty { text-align: center; padding: 36px 16px; color: #6b7280; }
+.gc-empty b { display: block; color: #374151; font-size: 16px; margin-bottom: 4px; }
+.gc-loadmore { text-align: center; color: #9ca3af; font-size: 13px; padding: 10px; }
+
+.gc-members-list { display: flex; flex-direction: column; gap: 2px; }
+
+@media (max-width: 480px) {
+  .gc-post { padding: 14px 12px 0; }
+  .gc-post .gc-cwrap { margin: 0 -12px; }
+  .gc-cbar, .gc-cpanel { padding-left: 12px; padding-right: 12px; }
+  .gc-act { padding: 7px 9px; }
+  .gc-act-right span { display: none; }
+  .gc-pc-quick { display: none; }
+}

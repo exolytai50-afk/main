@@ -1,0 +1,69 @@
+/* GigaChef — «Праздники»: общие стили страниц списка и просмотра.
+   Подключается через $extraCss. Цвета — переменные, тёмная тема = .theme-dark на <html>. */
+
+.hw-root{--hw-card:#fff;--hw-line:#e5e7eb;--hw-title:#1f2937;--hw-text:#4b5563;--hw-sub:#6b7280;--hw-accent:#e11d48;--hw-soft:#ffe4e6;--hw-pill:#f3f4f6;--hw-hero:linear-gradient(135deg,#ffe4e6,#fef3c7);--hw-ok:#059669;--hw-ok-soft:#d1fae5;}
+.theme-dark .hw-root{--hw-card:#1e293b;--hw-line:#334155;--hw-title:#f1f5f9;--hw-text:#cbd5e1;--hw-sub:#94a3b8;--hw-accent:#fb7185;--hw-soft:rgba(244,63,94,.18);--hw-pill:#334155;--hw-hero:linear-gradient(135deg,rgba(244,63,94,.22),rgba(245,158,11,.16));--hw-ok:#34d399;--hw-ok-soft:rgba(16,185,129,.18);}
+
+.hw-root .hw-card{background:var(--hw-card);border:1px solid var(--hw-line);border-radius:1.25rem;padding:1.25rem}
+.hw-root .hw-hero{background:var(--hw-hero);border-radius:1.5rem;padding:1.25rem 1.5rem;color:var(--hw-title)}
+.hw-root .hw-title{color:var(--hw-title)}
+.hw-root .hw-text{color:var(--hw-text)}
+.hw-root .hw-sub{color:var(--hw-sub)}
+.hw-root .hw-accent{color:var(--hw-accent)}
+.hw-root .hw-pill{display:inline-block;background:var(--hw-pill);color:var(--hw-text);padding:.2rem .65rem;border-radius:999px;font-size:.75rem;font-weight:600}
+.hw-root .hw-badge{display:inline-block;background:var(--hw-soft);color:var(--hw-accent);padding:.1rem .5rem;border-radius:.5rem;font-size:.7rem;font-weight:700}
+.hw-root .hw-badge-ok{background:var(--hw-ok-soft);color:var(--hw-ok)}
+.hw-root .hw-row{border-top:1px solid var(--hw-line);padding:.75rem 0}
+.hw-root .hw-row:first-child{border-top:0;padding-top:0}
+
+.hw-root .hw-cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.1rem;border-radius:.75rem;font-weight:800;color:#4c0519;background:linear-gradient(90deg,#fb7185,#fbbf24);border:0;cursor:pointer;transition:filter .15s,box-shadow .15s;text-decoration:none}
+.hw-root .hw-cta:hover:not(:disabled){filter:brightness(1.05);box-shadow:0 6px 18px rgba(244,63,94,.25)}
+.hw-root .hw-cta:disabled{opacity:.55;cursor:wait}
+.hw-root .hw-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.5rem .9rem;border-radius:.75rem;font-size:.8rem;font-weight:700;color:var(--hw-text);background:var(--hw-card);border:1px solid var(--hw-line);cursor:pointer;transition:border-color .15s;text-decoration:none}
+.hw-root .hw-btn:hover:not(:disabled){border-color:var(--hw-accent)}
+.hw-root .hw-btn:disabled{opacity:.5;cursor:not-allowed}
+.hw-root .hw-btn-danger{color:#e11d48}
+.hw-root .hw-input{width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--hw-line);background:var(--hw-card);color:var(--hw-text);outline:none}
+.hw-root .hw-input:focus{border-color:var(--hw-accent)}
+.hw-root .hw-error{border:1px solid #fda4af;background:#fff1f2;color:#9f1239;border-radius:.75rem;padding:.75rem 1rem;font-size:.875rem;font-weight:600}
+.theme-dark .hw-root .hw-error{border-color:rgba(251,113,133,.5);background:rgba(244,63,94,.14);color:#fecdd3}
+.hw-root .hw-okmsg{border:1px solid #6ee7b7;background:var(--hw-ok-soft);color:var(--hw-ok);border-radius:.75rem;padding:.75rem 1rem;font-size:.875rem;font-weight:600}
+
+.hw-root .hw-anchors{display:flex;flex-wrap:wrap;gap:.5rem}
+.hw-root .hw-dish summary{cursor:pointer;list-style:none}
+.hw-root .hw-dish summary::-webkit-details-marker{display:none}
+.hw-root .hw-grid2{display:grid;grid-template-columns:1fr;gap:0 1.5rem}
+@media (min-width:640px){.hw-root .hw-grid2{grid-template-columns:1fr 1fr}}
+.hw-root .hw-ing{display:flex;justify-content:space-between;gap:.75rem;padding:.3rem 0;border-bottom:1px dashed var(--hw-line);font-size:.875rem;color:var(--hw-text)}
+
+/* список покупок */
+.hw-root .hw-check{display:flex;align-items:flex-start;gap:.65rem;padding:.45rem 0;cursor:pointer}
+.hw-root .hw-check input{margin-top:.2rem;width:1.1rem;height:1.1rem;accent-color:#f43f5e;flex-shrink:0}
+.hw-root .hw-done{text-decoration:line-through;opacity:.5}
+.hw-root .hw-print-only{display:none}
+
+/* индикатор этапов на карточке */
+.hw-root .hw-dot{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:700;color:var(--hw-sub)}
+.hw-root .hw-dot i{width:.55rem;height:.55rem;border-radius:999px;background:var(--hw-line);display:inline-block}
+.hw-root .hw-dot.on{color:var(--hw-ok)}
+.hw-root .hw-dot.on i{background:var(--hw-ok)}
+
+/* печать только списка покупок: кнопка вешает на body класс hw-print-list */
+@media print{
+  body.hw-print-list aside,
+  body.hw-print-list header,
+  body.hw-print-list nav,
+  body.hw-print-list footer,
+  body.hw-print-list [data-chat-btn],
+  body.hw-print-list #cookie-banner,
+  body.hw-print-list .hw-print-hide{display:none !important}
+  body.hw-print-list main{padding:0 !important}
+  body.hw-print-list .hw-root{max-width:none;padding:0}
+  body.hw-print-list .hw-root,
+  body.hw-print-list .hw-card{background:#fff !important;color:#000 !important;border:0 !important}
+  body.hw-print-list .hw-title,
+  body.hw-print-list .hw-text,
+  body.hw-print-list .hw-sub{color:#000 !important}
+  body.hw-print-list .hw-print-only{display:block}
+  body.hw-print-list .hw-check input{accent-color:#000}
+}
